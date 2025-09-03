@@ -651,7 +651,7 @@ class LeggedRobot(BaseTask):
                         dof_props["armature"][i] = self.joint_armatures[env_id, i]
                     else:
                         dof_props["armature"][i] = self.joint_armatures[env_id, 0]
-                print(dof_props["friction"][i], dof_props["damping"][i], dof_props["armature"][i])
+                # print(dof_props["friction"][i], dof_props["damping"][i], dof_props["armature"][i])
             self.gym.set_actor_dof_properties(self.envs[env_id], 0, dof_props)
 
     def _post_physics_step_callback(self):
