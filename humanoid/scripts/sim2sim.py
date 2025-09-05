@@ -17,7 +17,7 @@ from humanoid.utils.helpers import get_load_path
 import os
 import time
 
-x_vel_cmd, y_vel_cmd, yaw_vel_cmd = 1, 0., 0.
+x_vel_cmd, y_vel_cmd, yaw_vel_cmd = 1, -0.2, -0.5
 
 joystick_use = True
 joystick_opened = False
@@ -216,7 +216,7 @@ def run_mujoco(policy, cfg, env_cfg):
             eu_ang = quaternion_to_euler_array(quat)
             eu_ang[eu_ang > math.pi] -= 2 * math.pi
             # eu_ang[2] = 0
-            # eu_ang[1] -= 0.1
+            eu_ang[1] -= 0.1
 
             # if not start_flag or end_flag:
             #     count_lowlevel = 0.0
