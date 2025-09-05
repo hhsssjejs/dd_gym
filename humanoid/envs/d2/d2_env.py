@@ -8,7 +8,7 @@ import torch
 from humanoid.envs import LeggedRobot
 
 from humanoid.utils.terrain import Terrain
-from .trajectory_generator_x2 import TrajectoryGenerator
+# from .trajectory_generator_x2 import TrajectoryGenerator
 
 # from collections import deque
 def copysign_new(a, b):
@@ -89,13 +89,13 @@ class D2DHStandEnv(LeggedRobot):
         self.ref_dof_pos = torch.zeros((self.num_envs, self.num_actions), device=self.device)
         self.ref_dof_vel = torch.zeros((self.num_envs, self.num_actions), device=self.device)
 
-        self.trajectory_generator = TrajectoryGenerator(vx=0.0, vy=0.0, wz=0.0, base_height=self.cfg.rewards.base_height_target, swing_height=self.cfg.rewards.target_feet_height,
-                                                        stance_length=0.0, stance_width=0.279, num_envs=self.num_envs, device=self.device)
-        self.trajectory_generator.cpg.dt = self.cfg.control.decimation * self.cfg.sim.dt
+        # self.trajectory_generator = TrajectoryGenerator(vx=0.0, vy=0.0, wz=0.0, base_height=self.cfg.rewards.base_height_target, swing_height=self.cfg.rewards.target_feet_height,
+                                                        # stance_length=0.0, stance_width=0.279, num_envs=self.num_envs, device=self.device)
+        # self.trajectory_generator.cpg.dt = self.cfg.control.decimation * self.cfg.sim.dt
         self.stance_ratio = self.cfg.rewards.stance_ratio
-        self.trajectory_generator.cpg.BETA[-1] = self.stance_ratio
-        self.trajectory_generator.stance_ratio = self.stance_ratio
-        self.trajectory_generator.swing_ratio = 1 - self.stance_ratio
+        # self.trajectory_generator.cpg.BETA[-1] = self.stance_ratio
+        # self.trajectory_generator.stance_ratio = self.stance_ratio
+        # self.trajectory_generator.swing_ratio = 1 - self.stance_ratio
 
 
     def _push_robots(self):
@@ -266,9 +266,9 @@ class D2DHStandEnv(LeggedRobot):
                 # resample_command stands for _resample_stand_command/_resample_walk_sagittal_command/...
                 resample_command(env_ids)
 
-        self.trajectory_generator.vx[env_ids] = self.commands[env_ids, 0]
-        self.trajectory_generator.vy[env_ids] = self.commands[env_ids, 1]
-        self.trajectory_generator.wz[env_ids] = self.commands[env_ids, 2]
+        # self.trajectory_generator.vx[env_ids] = self.commands[env_ids, 0]
+        # self.trajectory_generator.vy[env_ids] = self.commands[env_ids, 1]
+        # self.trajectory_generator.wz[env_ids] = self.commands[env_ids, 2]
 
     def _resample_stand_command(self, env_ids):
         self.commands[env_ids, 0] = torch.zeros(len(env_ids), device=self.device)
