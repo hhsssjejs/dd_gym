@@ -352,6 +352,7 @@ class D2DHStandCfg(LeggedRobotCfg):
             feet_swing = 2.0
             # ref_joint_vel = 0.2
             feet_clearance = 1.
+            feet_swing_height = -20.0
             feet_contact_number = 2.0
             gait_feet_frc_perio = 1.0
             gait_feet_spd_perio = 1.0
@@ -372,7 +373,7 @@ class D2DHStandCfg(LeggedRobotCfg):
             # stand_still = 5
             # base pos
             default_joint_pos = 1.0
-            orientation = 1.
+            orientation = 2.
             feet_rotation = 0.3
             base_height = 0.2
             base_acc = 0.2
@@ -442,11 +443,11 @@ class D2DHStandCfgPPO(LeggedRobotCfgPPO):
 
         sym_loss = True
         obs_permutation = [-0.0001, -1, 2, -3, -4,
-                           11, -12, -13, 14, 15, -16,  5, -6, -7, 8, 9, -10, 
-                           23, -24, -25, 26, 27, -28,  17, -18, -19, 20, 21, -22, 
-                           35, -36, -37, 38, 39, -40,  29, -30, -31, 32, 33, -34, 
+                           -11, -12, 13, 14, 15, -16,  -5, -6, 7, 8, 9, -10, 
+                           -23, -24, 25, 26, 27, -28,  -17, -18, 19, 20, 21, -22, 
+                           -35, -36, 37, 38, 39, -40,  -29, -30, 31, 32, 33, -34, 
                            -41, 42, -43, -44, 45, -46]
-        act_permutation = [6, -7, -8, 9, 10, -11,  0.0001, -1, -2, 3, 4, -5]
+        act_permutation = [-6, -7, 8, 9, 10, -11,  -0.0001, -1, 2, 3, 4, -5]
         frame_stack = D2DHStandCfg.env.frame_stack
         sym_coef = 1.0
 

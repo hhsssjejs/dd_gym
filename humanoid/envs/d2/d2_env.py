@@ -936,8 +936,8 @@ class D2DHStandEnv(LeggedRobot):
         Calculates the reward for maintaining a flat base orientation. It penalizes deviation 
         from the desired base orientation using the base euler angles and the projected gravity vector.
         """
-        quat_mismatch = torch.exp(-torch.sum(torch.abs(self.base_euler_xyz[:, :2]), dim=1) * 10)
-        orientation = torch.exp(-torch.norm(self.projected_gravity[:, :2], dim=1) * 20)
+        quat_mismatch = torch.exp(-torch.sum(torch.abs(self.base_euler_xyz[:, :2]), dim=1) * 1)
+        orientation = torch.exp(-torch.norm(self.projected_gravity[:, :2], dim=1) * 2)
 
         return (quat_mismatch + orientation) / 2.
 
@@ -1076,6 +1076,12 @@ class D2DHStandEnv(LeggedRobot):
         rew_pos = torch.sum(rew_pos * swing_mask, dim=1)
         self.feet_height *= ~contact
         return rew_pos
+    
+    def _reward_feet_swing_height(self):
+        contact = torch.norm(self.contact_forces[:, self.feet_indices, :3], dim=2) > 1.
+        foot_height = self._get_feet_heights() - self.cfg.rewards.feet_to_ankle_distance
+        pos_error = torch.square(foot_height - self.cfg.rewards.target_feet_height - 0.01) * ~contact
+        return torch.sum(pos_error, dim=(1))
 
     def _reward_low_speed(self):
         """
