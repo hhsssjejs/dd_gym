@@ -64,7 +64,7 @@ class Logger:
         # self.plot_process11 = Process(target=self._plot_tn1)
         # self.plot_process12 = Process(target=self._plot_torque_vel1)
         self.plot_process.start()
-        # self.plot_process1.start()
+        self.plot_process1.start()
         # self.plot_process2.start()
         # self.plot_process3.start()
         # self.plot_process4.start()
@@ -139,13 +139,13 @@ class Logger:
         # a.legend()
 
         a = axs[2, 1]
-        if log["dof_torque_6"]: a.plot(time, log["dof_torque_6"], label='commanded')
-        a.set(xlabel='time [s]', ylabel='dof_torque_6', title='dof_torque_6')
+        if log["dof_torque_3"]: a.plot(time, log["dof_torque_3"], label='commanded')
+        a.set(xlabel='time [s]', ylabel='dof_torque_3', title='dof_torque_3')
         a.legend()
 
         a = axs[2, 2]
-        if log["dof_torque_12"]: a.plot(time, log["dof_torque_12"], label='commanded')
-        a.set(xlabel='time [s]', ylabel='dof_torque_12', title='dof_torque_12')
+        if log["dof_torque_9"]: a.plot(time, log["dof_torque_9"], label='commanded')
+        a.set(xlabel='time [s]', ylabel='dof_torque_9', title='dof_torque_9')
         a.legend()
 
         a = axs[1, 0]
@@ -154,8 +154,8 @@ class Logger:
         a.legend()
 
         a = axs[1, 1]
-        if log["dof_torque_11"]: a.plot(time, log["dof_torque_11"], label='commanded')
-        a.set(xlabel='time [s]', ylabel='dof_torque_11', title='dof_torque_11')
+        if log["dof_torque_10"]: a.plot(time, log["dof_torque_10"], label='commanded')
+        a.set(xlabel='time [s]', ylabel='dof_torque_10', title='dof_torque_10')
         a.legend()
 
         # a = axs[1, 0]
@@ -170,49 +170,34 @@ class Logger:
         plt.show()
 
     def _plot_position(self):
-        nb_rows = 3
-        nb_cols = 2 
-        fig, axs = plt.subplots(nb_rows, nb_cols)
+        nb_rows = 2
+        nb_cols = 6
+        fig, axs = plt.subplots(nb_rows, nb_cols, figsize=(18, 6))
+
+        # 生成时间轴
         for key, value in self.state_log.items():
             time = np.linspace(0, len(value) * self.dt, len(value))
             break
+
         log = self.state_log
-        # plot position targets and measured positions
-        a = axs[0, 0]
-        if log["dof_pos_0"]: a.plot(time, log["dof_pos_0"], label='measured')
-        if log["dof_pos_target_0"]: a.plot(time, log["dof_pos_target_0"], label='target')
-        a.set(xlabel='time [s]', ylabel='Position [rad]', title='DOF Position[0]')
-        a.legend()
 
-        a = axs[0, 1]
-        if log["dof_pos_7"]: a.plot(time, log["dof_pos_7"], label='measured')
-        if log["dof_pos_target_7"]: a.plot(time, log["dof_pos_target_7"], label='target')
-        a.set(xlabel='time [s]', ylabel='Position [rad]', title='DOF Position[7]')
-        a.legend()
+        for dof in range(12):  # 0-11
+            row = 0 if dof < 6 else 1
+            col = dof % 6
+            a = axs[row, col]
 
-        a = axs[1, 0]
-        if log["dof_pos_3"]: a.plot(time, log["dof_pos_3"], label='measured')
-        if log["dof_pos_target_3"]: a.plot(time, log["dof_pos_target_3"], label='target')
-        a.set(xlabel='time [s]', ylabel='Position [rad]', title='DOF Position[3]')
-        a.legend()
+            measured_key = f"dof_pos_{dof}"
+            target_key = f"dof_pos_target_{dof}"
 
-        a = axs[1, 1]
-        if log["dof_pos_10"]: a.plot(time, log["dof_pos_10"], label='measured')
-        if log["dof_pos_target_10"]: a.plot(time, log["dof_pos_target_10"], label='target')
-        a.set(xlabel='time [s]', ylabel='Position [rad]', title='DOF Position[10]')
-        a.legend()
+            if measured_key in log and log[measured_key]:
+                a.plot(time, log[measured_key], label="measured")
+            if target_key in log and log[target_key]:
+                a.plot(time, log[target_key], label="target")
 
-        a = axs[2, 0]
-        if log["dof_pos_6"]: a.plot(time, log["dof_pos_6"], label='measured')
-        if log["dof_pos_target_6"]: a.plot(time, log["dof_pos_target_6"], label='target')
-        a.set(xlabel='time [s]', ylabel='Position [rad]', title='DOF Position[6]')
-        a.legend()
+            a.set(xlabel="time [s]", ylabel="Position [rad]", title=f"DOF Position[{dof}]")
+            a.legend()
 
-        a = axs[2, 1]
-        if log["dof_pos_13"]: a.plot(time, log["dof_pos_13"], label='measured')
-        if log["dof_pos_target_13"]: a.plot(time, log["dof_pos_target_13"], label='target')
-        a.set(xlabel='time [s]', ylabel='Position [rad]', title='DOF Position[13]')
-        a.legend()
+        plt.tight_layout()
         plt.show()
 
     def _plot_position1(self):
