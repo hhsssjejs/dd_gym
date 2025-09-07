@@ -479,12 +479,22 @@ class LeggedRobot(BaseTask):
                 self.joint_damping_coeffs[env_ids] = torch_rand_float(joint_damping_range[0], joint_damping_range[1], (len(env_ids), 1), device=self.device)
 
         # rand joint armature inertia set in sim
+        # if self.cfg.domain_rand.randomize_joint_armature:
+        #     if self.cfg.domain_rand.randomize_joint_armature_each_joint:
+        #         for i in range(self.num_dofs):
+        #             range_key = f'joint_{i + 1}_armature_range'
+        #             armature_range = getattr(self.cfg.domain_rand, range_key)
+        #             self.joint_armatures[env_ids, i] = torch_rand_float(armature_range[0], armature_range[1], (len(env_ids), 1), device=self.device).reshape(-1) + self.joint_armatures_default[env_ids, i]
+        #     else:
+        #         joint_armature_range = self.cfg.domain_rand.joint_armature_range
+        #         self.joint_armatures[env_ids] = torch_rand_float(joint_armature_range[0], joint_armature_range[1], (len(env_ids), 1), device=self.device)
+
         if self.cfg.domain_rand.randomize_joint_armature:
             if self.cfg.domain_rand.randomize_joint_armature_each_joint:
                 for i in range(self.num_dofs):
                     range_key = f'joint_{i + 1}_armature_range'
                     armature_range = getattr(self.cfg.domain_rand, range_key)
-                    self.joint_armatures[env_ids, i] = torch_rand_float(armature_range[0], armature_range[1], (len(env_ids), 1), device=self.device).reshape(-1) + self.joint_armatures_default[env_ids, i]
+                    self.joint_armatures[env_ids, i] = torch_rand_float(armature_range[0], armature_range[1], (len(env_ids), 1), device=self.device).reshape(-1)
             else:
                 joint_armature_range = self.cfg.domain_rand.joint_armature_range
                 self.joint_armatures[env_ids] = torch_rand_float(joint_armature_range[0], joint_armature_range[1], (len(env_ids), 1), device=self.device)

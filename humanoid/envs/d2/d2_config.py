@@ -247,18 +247,18 @@ class D2DHStandCfg(LeggedRobotCfg):
         randomize_joint_armature = True
         randomize_joint_armature_each_joint = True
         joint_armature_range = [0.0001, 0.05]  # Factor
-        joint_1_armature_range = [-0.0331776, 0.0331776]
-        joint_2_armature_range = [-0.0331776, 0.0331776]
-        joint_3_armature_range = [-0.0036864, 0.0036864]
-        joint_4_armature_range = [-0.0331776, 0.0331776]
-        joint_5_armature_range = [-0.00101088, 0.00101088]
-        joint_6_armature_range = [-0.00101088, 0.00101088]
-        joint_7_armature_range = [-0.0331776, 0.0331776]
-        joint_8_armature_range = [-0.0331776, 0.0331776]
-        joint_9_armature_range = [-0.0036864, 0.0036864]
-        joint_10_armature_range = [-0.0331776, 0.0331776]
-        joint_11_armature_range = [-0.00101088, 0.00101088]
-        joint_12_armature_range = [-0.00101088, 0.00101088]
+        joint_1_armature_range = [9*0.0331776, 11*0.0331776]
+        joint_2_armature_range = [9*0.0331776, 11*0.0331776]
+        joint_3_armature_range = [9*0.0036864, 11*0.0036864]
+        joint_4_armature_range = [9*0.0331776, 11*0.0331776]
+        joint_5_armature_range = [9*0.00101088, 11*0.00101088]
+        joint_6_armature_range = [9*0.00101088, 11*0.00101088]
+        joint_7_armature_range = [9*0.0331776, 11*0.0331776]
+        joint_8_armature_range = [9*0.0331776, 11*0.0331776]
+        joint_9_armature_range = [9*0.0036864, 11*0.0036864]
+        joint_10_armature_range = [9*0.0331776, 11*0.0331776]
+        joint_11_armature_range = [9*0.00101088, 11*0.00101088]
+        joint_12_armature_range = [9*0.00101088, 11*0.00101088]
 
         add_lag = True
         randomize_lag_timesteps = True
@@ -328,13 +328,13 @@ class D2DHStandCfg(LeggedRobotCfg):
         #                                -0.652576,   -0.274948,    0.351517 ,   0.304197 ,  -0.215859 ,0.000468325,        # right leg
         #                                 0.3    ]                                                # right arm
 
-        final_swing_joint_delta_pos = [0.0, 0.0, -0.32, 0.81, -0.35, 0,  # left leg
+        final_swing_joint_delta_pos = [0.0, 0.0, -0.22, 0.65, -0.28, 0,  # left leg
 
-                                       0.0, 0.0, -0.32, 0.81, -0.35, 0,  # right leg
+                                       0.0, 0.0, -0.22, 0.65, -0.28, 0,  # right leg
                                         ]  # right arm
 
         target_feet_height = 0.055  # m  0.047 / 0.07 / 0.035
-        target_feet_height_max = 0.065  # 0.065  / 0.09
+        target_feet_height_max = 0.075  # 0.065  / 0.09
         feet_to_ankle_distance = 0.054
 
         stance_ratio = 0.5
@@ -347,7 +347,7 @@ class D2DHStandCfg(LeggedRobotCfg):
         max_contact_force = 600  # 1400  #850  #700  # forces above this value are penalized
 
         class scales:
-            ref_joint_pos = 2.2
+            # ref_joint_pos = 2.2
             # ref_joint_pos_arm = 0.7
             feet_swing = 2.0
             # ref_joint_vel = 0.2
@@ -457,7 +457,7 @@ class D2DHStandCfgPPO(LeggedRobotCfgPPO):
         max_iterations = 20000  # number of policy updates
 
         # logging
-        save_interval = 100  # check for potential saves every this many iterations
+        save_interval = 500  # check for potential saves every this many iterations
         experiment_name = 'd2'
 
         # load and resume
